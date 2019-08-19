@@ -1,79 +1,93 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
+
+/*
+ * SplitChunksPlugin is enabled by default and replaced
+ * deprecated CommonsChunkPlugin. It automatically identifies modules which
+ * should be splitted of chunk by heuristics using module duplication count and
+ * module category (i. e. node_modules). And splits the chunks…
+ *
+ * It is safe to remove "splitChunks" from the generated configuration
+ * and was added as an educational example.
+ *
+ * https://webpack.js.org/plugins/split-chunks-plugin/
+ *
+ */
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+/*
+ * We've enabled HtmlWebpackPlugin for you! This generates a html
+ * page for you when you compile webpack, which will make you start
+ * developing and prototyping faster.
+ *
+ * https://github.com/jantimon/html-webpack-plugin
+ *
+ */
+
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
-  entry: './src/main.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ],
-      },      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-          }
-          // other vue-loader options go here
-        }
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      }
-    ]
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    },
-    extensions: ['*', '.js', '.vue', '.json']
-  },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true,
-    port: 8080
-  },
-  performance: {
-    hints: false
-  },
-  devtool: '#eval-source-map'
-}
+	mode: 'development',
+	entry: './src/main.js',
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
-}
+	output: {
+		filename: '[name].[chunkhash].js',
+		path: path.resolve(__dirname, 'dist')
+	},
+
+	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin(), new VueLoaderPlugin()],
+
+	module: {
+		rules: [
+			{
+				test: /\.vue$/,
+				use: [{
+				  loader: 'vue-loader',
+				  options: {
+					esModule: true
+				  }
+				}]
+			},
+			{
+				test: /.(js|jsx)$/,
+				include: [path.resolve(__dirname, 'src')],
+				loader: 'babel-loader',
+
+				options: {
+					plugins: ['syntax-dynamic-import'],
+
+					presets: [
+						[
+							'@babel/preset-env',
+							{
+								modules: false
+							}
+						]
+					]
+				}
+			}
+		]
+	},
+
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendors: {
+					priority: -10,
+					test: /[\\/]node_modules[\\/]/
+				}
+			},
+
+			chunks: 'async',
+			minChunks: 1,
+			minSize: 30000,
+			name: true
+		}
+	},
+
+	devServer: {
+		open: true,
+		port: 8080
+	}
+};
