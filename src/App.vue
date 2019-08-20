@@ -1,33 +1,35 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app height="45">
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Trip Map</span>
+        <!-- <span class="font-weight-light">MATERIAL DESIGN</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        href="https://github.com/Songsungeun/TripMap"
         target="_blank"
+        class="ma-2"
       >
-        <span class="mr-2">Latest Release</span>
+        <v-icon dark left>mdi-github-circle</v-icon>
+        <span class="mr-2">Github</span>
       </v-btn>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <navBar/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import navBar from './components/navBar';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    navBar
   },
   data: () => ({
     //
