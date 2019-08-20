@@ -1,32 +1,38 @@
 {
-  "version": "1.0.0",
-  "description": "My webpack project",
+  "name": "trip-map",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/songsungeun/trip-map"
+    "url": "https://github.com/Songsungeun/TripMap"
   },
   "author": "korea.sesong@gmail.com",
-  "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "css-loader": "^3.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "style-loader": "^1.0.0",
-    "vue": "^2.6.10",
-    "vue-loader": "^15.7.1",
-    "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
-  },
   "dependencies": {
-    "load-script-once": "^2.0.1",
-    "vuetify": "^2.0.7"
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vuetify": "^2.0.0",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/cli-plugin-eslint": "^3.10.0",
+    "@vue/cli-plugin-unit-mocha": "^3.10.0",
+    "@vue/cli-service": "^3.10.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2"
   }
 }

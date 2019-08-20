@@ -1,15 +1,34 @@
-# 🚀 Welcome to your new awesome project!
+# test-cli3
 
-This project has been created using **webpack scaffold**, you can now run
+## Project setup
+```
+npm install
+```
 
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
 ```
 npm run build
 ```
 
-or
-
+### Run your tests
 ```
-yarn build
+npm run test
 ```
 
-to bundle your application
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

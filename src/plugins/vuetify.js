@@ -1,22 +1,10 @@
-// src/plugins/vuetify.js
+import Vue from 'vue';
+import Vuetify from 'vuetify/lib';
 
-import Vue from 'vue'
-import Vuetify, {
-  VCard,
-  VRating,
-  VToolbar,
-} from 'vuetify/lib'
-import { Ripple } from 'vuetify/lib/directives'
+Vue.use(Vuetify);
 
-Vue.use(Vuetify, {
-  components: {
-    VCard,
-    VRating,
-    VToolbar,
+export default new Vuetify({
+  icons: {
+    iconfont: 'mdi',
   },
-  directives: {
-    Ripple,
-  },
-})
-
-export default new Vuetify({ ... })
+});
