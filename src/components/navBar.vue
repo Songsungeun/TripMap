@@ -1,17 +1,22 @@
 <template>
-  <v-card height="100%">
+  
     <v-navigation-drawer
       absolute
       permanent
       width="350"
+      class="nav_wrap"
     >
       <template v-slot:prepend>
-        <v-list-item>
-          
-
+        <v-list-item class="nav_list">
           <v-list-item-content>
-            <v-list-item-title>어디로 가시겠어요?</v-list-item-title>
-            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+            <v-list-item-title class="nav_text">어디로 가시겠어요?</v-list-item-title>
+              <v-text-field
+                label="목적지를 입력하세요"
+                single-line
+                outlined
+                :hide-details=true
+                style="margin-top:10px;"
+              ></v-text-field>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -34,7 +39,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </v-card>
 </template>
 
 <script>
@@ -50,3 +54,16 @@
     },
   }
 </script>
+
+<style scoped>
+.nav_text {
+  font-size: 1.25rem !important;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.0125em !important;
+}
+
+.nav_list {
+  margin-top:10px;
+}
+</style>
