@@ -87,14 +87,3 @@ export default {
     
 }
 </script>
-<style scoped>
-.header_title {
-  margin-right: 20px;
-}
-.header_btn_icon {
-  margin: 0;
-}
-.header_btn_icon:first {
-  margin-left: 50px !important;
-}
-</style>

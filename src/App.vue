@@ -5,7 +5,7 @@
     <app-header></app-header>    
 
     <v-content>
-      <map-area style="left: 300px; height: 100%; background-color: black; position: absolute"></map-area>
+      <map-area class="map_body"></map-area>
     </v-content>
   </v-app>
 </template>
@@ -29,7 +29,5 @@ export default {
 </script>
 
 <style scoped>
-.body_wrap {
-  font-family: "Roboto", sans-serif;
-}
+
 </style>

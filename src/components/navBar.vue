@@ -56,14 +56,5 @@
 </script>
 
 <style scoped>
-.nav_text {
-  font-size: 1.25rem !important;
-  font-weight: 500;
-  line-height: 2rem;
-  letter-spacing: 0.0125em !important;
-}
 
-.nav_list {
-  margin-top:10px;
-}
 </style>
