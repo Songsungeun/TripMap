@@ -3,7 +3,7 @@
     <v-navigation-drawer
       absolute
       permanent
-      width="350"
+      width="300"
       class="nav_wrap"
     >
       <template v-slot:prepend>
