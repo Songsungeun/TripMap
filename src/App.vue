@@ -23,11 +23,7 @@ export default {
     mapArea,
   },
   data: () => ({
-    //
+    DEBUG: true
   }),
 };
 </script>
-
-<style scoped>
-
-</style>
