@@ -1,4 +1,4 @@
-# test-cli3
+# TripMap
 
 ## Project setup
 ```
