@@ -11,7 +11,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-airplane-takeoff</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/airplane.svg')"
+          class="my-3"
+          contain
+          height="30"
+          width="30"
+        ></v-img>
       </v-btn>
 
       <!-- 구글 숙박 검색 링크 -->
@@ -22,7 +28,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-hotel</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/bed.svg')"
+          class="my-3"
+          contain
+          height="30"
+          width="25"
+        ></v-img>
       </v-btn>
 
       <!-- AccuWeather 링크 -->
@@ -33,7 +45,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-weather-partly-cloudy</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/sun.svg')"
+          class="my-3"
+          contain
+          height="20"
+          width="20"
+        ></v-img>
       </v-btn>
 
       <!-- Daum 환율 링크 -->
@@ -44,7 +62,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-currency-usd</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/currency.svg')"
+          class="my-3"
+          contain
+          height="20"
+          width="20"
+        ></v-img>
       </v-btn>
 
       <!-- Tripadvisor 링크 -->
@@ -55,7 +79,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-binoculars</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/binoculars.svg')"
+          class="my-3"
+          contain
+          height="20"
+          width="20"
+        ></v-img>
       </v-btn>
 
       <!-- 구글번역 링크 -->
@@ -66,7 +96,13 @@
         class="header_btn_icon"
         small
       > 
-        <v-icon dark left>mdi-google-translate</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/translation.svg')"
+          class="my-3"
+          contain
+          height="20"
+          width="20"
+        ></v-img>
       </v-btn>
       
       </v-toolbar-title>
@@ -77,7 +113,13 @@
         target="_blank"
         class="ma-2 header_btn"
       >
-        <v-icon dark left>mdi-github-circle</v-icon>
+        <v-img
+          :src="require('../assets/header_icon/github.svg')"
+          class="my-3"
+          contain
+          height="20"
+          width="20"
+        ></v-img>
         <span class="mr-2">Github</span>
       </v-btn>
     </v-app-bar>

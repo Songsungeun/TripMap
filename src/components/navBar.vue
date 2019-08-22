@@ -47,7 +47,13 @@
       >
         <v-btn text color="deep-purple accent-4" @click="changeDebug" v-model="mode">
           <span>Debug Mode</span>
-          <i class="fa fa-bug"></i>
+          <v-img
+          :src="require('../assets/header_icon/bug.svg')"
+          class="my-3"
+          contain
+          height="15"
+          width="15"
+        ></v-img>
         </v-btn>
       </v-bottom-navigation>
     </v-navigation-drawer>

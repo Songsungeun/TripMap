@@ -9,21 +9,19 @@ import { mapGetters } from "vuex";
 export default {
     data() {
         return {
-
         }
     },
     computed: {
-        ...mapGetters(["debug"])
+        ...mapGetters(['devMode'])
     },
     mounted() {
-        console.log(this.debug)
-        this.loadMapAPI();
+        this.loadMapAPI(this.devMode);
     },
     methods: {
-        async loadMapAPI() {
+        async loadMapAPI(dev) {
             await loadScriptOnce(`//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=7c4d00c6529a86c577db80f7fd63e840`)
             navigator.geolocation.getCurrentPosition(function( position ) {
-                this.debug && console.log("debug mode");
+                dev && console.log(position)
             }, function( err ) {
                 console.log(err)
             })
