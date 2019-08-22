@@ -38,10 +38,23 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      <v-bottom-navigation
+      scroll-target="#scroll-area-1"
+      hide-on-scroll
+      absolute
+      horizontal
+      >
+        <v-btn text color="deep-purple accent-4" @click="changeDebug" v-model="mode">
+          <span>Debug Mode</span>
+          <i class="fa fa-bug"></i>
+        </v-btn>
+      </v-bottom-navigation>
     </v-navigation-drawer>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
   export default {
     data () {
       return {
@@ -50,7 +63,17 @@
           { title: 'My Account', icon: 'mdi-account' },
           { title: 'Users', icon: 'mdi-account-group-outline' },
         ],
+        mode: false
       }
     },
+    computed: {
+        ...mapGetters(['devMode'])
+    },
+    methods: {
+      changeDebug() {
+        this.mode = !this.mode;
+        this.$store.commit('changeDevMode', this.mode);
+      }
+    }
   }
 </script>

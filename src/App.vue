@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import appHeader from './components/Header';
-import navBar from './components/NavBar';
-import mapArea from './components/Map';
+import appHeader from './components/Header'
+import navBar from './components/NavBar'
+import mapArea from './components/Map'
 
 export default {
   name: 'App',
@@ -23,7 +23,6 @@ export default {
     mapArea,
   },
   data: () => ({
-    DEBUG: true
-  }),
+  })
 };
 </script>
