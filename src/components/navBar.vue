@@ -9,9 +9,9 @@
       <template v-slot:prepend>
         <v-list-item class="nav_list">
           <v-list-item-content>
-            <v-list-item-title class="nav_text">어디로 가시겠어요?</v-list-item-title>
+            <!-- <v-list-item-title class="nav_text">어디로 가시겠어요?</v-list-item-title> -->
               <v-text-field
-                label="목적지를 입력하세요"
+                label="어디로 가시겠어요?"
                 single-line
                 outlined
                 :hide-details=true
