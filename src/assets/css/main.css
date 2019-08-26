@@ -36,3 +36,10 @@
     height: 100%; 
     position: absolute
 }
+
+#refresh_btn {
+    position: fixed;
+    z-index: 9999;
+    top: 50px;
+    right:10px;
+}
