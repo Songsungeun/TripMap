@@ -2,12 +2,12 @@
   <v-container fluid></v-container>
 </template>
 <script>
-import loadScriptOnce from 'load-script-once'
 import { mapGetters } from "vuex"
 
 export default {
   data() {
     return {
+      maps: null,
       lat: null,
       lng: null
     }
@@ -21,12 +21,15 @@ export default {
   methods: {
     async initMap() {
       try {
-        await loadScriptOnce(`//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=7c4d00c6529a86c577db80f7fd63e840`);
+        await this.loadMap();
         await this.setCenterPosition();
         await this.renderMap(this.lat, this.lng);
       } catch (err) {
         this.devMode && console.log(err);
       }
+    },
+    async loadMap() {
+      await this.$store.dispatch('loadMapScript');
     },
     async setCenterPosition() {
       let position = await this.getLocation();
