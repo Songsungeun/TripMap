@@ -1,13 +1,38 @@
 <template>
-  <v-container fluid></v-container>
+  <v-container fluid>
+    <v-progress-circular
+      :size="70"
+      :width="7"
+      color="purple"
+      indeterminate
+      class="loading_bar"
+      v-show="isLoading"
+    ></v-progress-circular>
+
+    <v-btn
+      text
+      small
+      @click="refresh"
+    > 
+      <v-img
+        :src="require('../assets/refresh.svg')"
+        class="my-3"
+        contain
+        height="20"
+        width="20"
+        id="refresh_btn"
+      ></v-img>
+    </v-btn>
+  </v-container>
 </template>
 <script>
 import { mapGetters } from "vuex"
+import { setTimeout } from 'timers';
 
 export default {
   data() {
     return {
-      maps: null,
+      isLoading: true,
       lat: null,
       lng: null
     }
@@ -21,9 +46,11 @@ export default {
   methods: {
     async initMap() {
       try {
+        this.isLoading = true;
         await this.loadMap();
         await this.setCenterPosition();
         await this.renderMap(this.lat, this.lng);
+        this.isLoading = false;
       } catch (err) {
         this.devMode && console.log(err);
       }
@@ -46,7 +73,8 @@ export default {
       })
     },
     getLocation() {
-      return new Promise(function( resolve, reject ) {
+      return new Promise(( resolve, reject ) => {
+        this.devMode && console.log("위치정보 로딩중")
         navigator.geolocation.getCurrentPosition(function( position ) {
           resolve( {lat: position.coords.latitude, lng: position.coords.longitude} );
         }, function ( err ) {
@@ -54,6 +82,14 @@ export default {
           reject(err)
         });
       });
+    },
+    refresh() {
+      this.isLoading = true;
+      this.setCenterPosition();
+      this.renderMap(this.lat, this.lng);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
     }
     
   }

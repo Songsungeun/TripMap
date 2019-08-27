@@ -27,7 +27,7 @@
         <v-list-item
           v-for="item in items"
           :key="item.title"
-          @click=""
+          
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -40,7 +40,7 @@
       </v-list>
 
       <v-bottom-navigation
-      scroll-target="#scroll-area-1"
+      
       hide-on-scroll
       absolute
       horizontal
