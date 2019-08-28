@@ -38,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['devMode'])
+    ...mapGetters(['dev'])
   },
   mounted() {
     this.initMap();
@@ -52,7 +52,7 @@ export default {
         await this.renderMap(this.lat, this.lng);
         this.isLoading = false;
       } catch (err) {
-        this.devMode && console.log(err);
+        this.dev && console.log(err);
       }
     },
     async loadMap() {
@@ -61,7 +61,7 @@ export default {
     async setCenterPosition() {
       let position = await this.getLocation();
       this.lat = position.lat || 33.450701, this.lng = position.lng || 126.570667;
-      this.devMode && console.log(`lat = ${this.lat}, lng = ${this.lng}`);
+      this.dev && console.log(`lat = ${this.lat}, lng = ${this.lng}`);
     },
     renderMap(lat, lng) {
       kakao.maps.load(() => {
@@ -70,25 +70,15 @@ export default {
           level: 3
         };
         let map = new kakao.maps.Map(this.$el, options);
-        var places = new kakao.maps.services.Places();
-
-        var callback = function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                console.log(result);
-            }
-        };
-
-        places.keywordSearch('판교 치킨', callback);
-        
       })
     },
     getLocation() {
       return new Promise(( resolve, reject ) => {
-        this.devMode && console.log("위치정보 로딩중")
+        this.dev && console.log("위치정보 로딩중")
         navigator.geolocation.getCurrentPosition(function( position ) {
           resolve( {lat: position.coords.latitude, lng: position.coords.longitude} );
         }, function ( err ) {
-          this.devMode && console.log("위치 정보를 읽어오지 못했습니다.");
+          this.dev && console.log("위치 정보를 읽어오지 못했습니다.");
           reject(err)
         });
       });

@@ -16,6 +16,9 @@
                 outlined
                 :hide-details=true
                 style="margin-top:10px;"
+                v-model="inputPlace"
+                append-icon="mdi-magnify"
+                @keyup.enter="searchPlace"
               ></v-text-field>
           </v-list-item-content>
         </v-list-item>
@@ -25,16 +28,15 @@
 
       <v-list dense>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          
+          v-for="(place, index) in places"
+          :key="place.id"
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <!-- <v-list-item-icon>
+            <v-icon>{{ place.icon }}</v-icon>
+          </v-list-item-icon> -->
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <a @click="selectPlace" style="color: black !important;"><v-list-item-title style="font-size: medium;"><span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</v-list-item-title></a>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -64,21 +66,29 @@ import { mapGetters } from "vuex";
   export default {
     data () {
       return {
-        items: [
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'My Account', icon: 'mdi-account' },
-          { title: 'Users', icon: 'mdi-account-group-outline' },
-        ],
-        mode: false
+        places: [],
+        mode: false,
+        inputPlace: ''
       }
     },
     computed: {
-        ...mapGetters(['devMode'])
+        ...mapGetters(['Mode', 'dev'])
     },
     methods: {
       changeDebug() {
         this.mode = !this.mode;
         this.$store.commit('changeDevMode', this.mode);
+      },
+      async searchPlace() {
+        try {
+          this.dev && console.log(this.places);
+          this.places = await this.$store.dispatch('searchPlace', this.inputPlace);
+        } catch (err) {
+          alert(err);
+        }
+      },
+      selectPlace() {
+        console.log("select");
       }
     }
   }

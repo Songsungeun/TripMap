@@ -48,3 +48,7 @@
     left: 37%;
     z-index: 5;
 }
+.search_index {
+    margin-right: 4px;
+    color: #1f8cff;
+}
