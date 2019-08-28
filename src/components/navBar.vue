@@ -27,18 +27,20 @@
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item
-          v-for="(place, index) in places"
-          :key="place.id"
-        >
-          <!-- <v-list-item-icon>
-            <v-icon>{{ place.icon }}</v-icon>
-          </v-list-item-icon> -->
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="(place, index) in places"
+            :key="place.id"
+          >
+            <!-- <v-list-item-icon>
+              <v-icon>{{ place.icon }}</v-icon>
+            </v-list-item-icon> -->
 
-          <v-list-item-content>
-            <a @click="selectPlace" style="color: black !important;"><v-list-item-title style="font-size: medium;"><span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</v-list-item-title></a>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <a @click="selectPlace" style="color: black !important;"><v-list-item-title style="font-size: medium;"><span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</v-list-item-title></a>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
 
       <v-bottom-navigation
