@@ -1,7 +1,8 @@
 import loadScriptOnce from 'load-script-once'
 const state = {
   map: null,
-  place: null
+  place: null,
+  infoWindow: null
 }
 
 const getters = {
@@ -32,7 +33,6 @@ const actions = {
       });
     }); 
   }
-  
 }
 
 const mutations = {
@@ -44,6 +44,7 @@ const mutations = {
   },
   setPlaceObj( state ) {
     state.place = new kakao.maps.services.Places();
+    state.infoWindow = new kakao.maps.InfoWindow({zIndex:1});
   },
   setPlacePositionInMap( state, placeList ) {
     let bounds = new kakao.maps.LatLngBounds();
@@ -56,6 +57,17 @@ const mutations = {
   setDisplayMarker( state, place) {
     let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
     let marker = new kakao.maps.Marker(paramObj);
+    kakao.maps.event.addListener(marker, 'click', () => {
+      state.infoWindow.setContent(
+        `<div style="padding:5px;font-size:12px;">
+          <div>장소:  ${place.place_name}</div>
+          <div>홈페이지:<a href="${place.place_url || '#'}">  ${place.place_url || '없음'}</a></div>
+          <div>Tel:  ${place.phone || '등록안됨'}</div>
+          <div>주소:  ${place.road_address_name || '등록안됨'}</div>
+        </div>`
+      );
+      state.infoWindow.open(state.map, marker)
+    })
   }
 }
 

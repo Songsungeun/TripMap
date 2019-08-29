@@ -87,7 +87,8 @@ import { mapGetters } from "vuex";
           this.places = await this.$store.dispatch('searchPlace', this.inputPlace);
           this.$store.commit('setPlacePositionInMap', this.places);
         } catch (err) {
-          alert(err);
+          this.dev && console.log(err);
+          alert("Error 발생! Debug Mode: On 후에 콘솔창 확인하세요.")
         }
       },
       selectPlace() {
