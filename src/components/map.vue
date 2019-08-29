@@ -69,7 +69,8 @@ export default {
           center: new kakao.maps.LatLng(lat, lng),
           level: 3
         };
-        let map = new kakao.maps.Map(this.$el, options);
+        this.$store.commit('setMapObj', {el: this.$el, option: options});
+        this.$store.commit('setPlaceObj');
       })
     },
     getLocation() {

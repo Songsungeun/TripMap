@@ -85,6 +85,7 @@ import { mapGetters } from "vuex";
         try {
           this.dev && console.log(this.places);
           this.places = await this.$store.dispatch('searchPlace', this.inputPlace);
+          this.$store.commit('setPlacePositionInMap', this.places);
         } catch (err) {
           alert(err);
         }
