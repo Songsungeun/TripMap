@@ -37,7 +37,10 @@
             </v-list-item-icon> -->
 
             <v-list-item-content>
-              <a @click="selectPlace" style="color: black !important;"><v-list-item-title style="font-size: medium;"><span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</v-list-item-title></a>
+              <v-list-item-title style="font-size: medium;">
+                <a @click="selectPlace" style="color: black !important;">
+                <span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</a>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>

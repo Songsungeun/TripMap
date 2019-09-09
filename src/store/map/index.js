@@ -54,9 +54,16 @@ const mutations = {
     });
     state.map.setBounds(bounds);
   },
-  setDisplayMarker( state, place) {
-    let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
+  setDisplayMarker( state, place ) {
+    // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',  
+    let imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_normal.png',
+    imageSize = new kakao.maps.Size(64, 69), 
+    imageOption = {offset: new kakao.maps.Point(360, 198, 410, 162)}; 
+    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+
+    let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x), image: markerImage}
     let marker = new kakao.maps.Marker(paramObj);
+    
     kakao.maps.event.addListener(marker, 'click', () => {
       state.infoWindow.setContent(
         `<div style="padding:5px;font-size:12px;">
@@ -68,7 +75,8 @@ const mutations = {
       );
       state.infoWindow.open(state.map, marker)
     })
-  }
+  },
+  
 }
 
 export default {
