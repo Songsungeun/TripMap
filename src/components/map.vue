@@ -78,7 +78,7 @@ export default {
         this.dev && console.log("위치정보 로딩중")
         navigator.geolocation.getCurrentPosition(function( position ) {
           resolve( {lat: position.coords.latitude, lng: position.coords.longitude} );
-        }, function ( err ) {
+        }, (err) => {
           this.dev && console.log("위치 정보를 읽어오지 못했습니다.");
           reject(err)
         });
