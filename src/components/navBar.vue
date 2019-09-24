@@ -27,10 +27,10 @@
 
       <v-divider></v-divider>
 
-      <v-list dense>
+      <v-list dense class="search_result_wrap">
         <v-list-item-group color="primary">
           <v-list-item
-            v-for="(place, index) in places"
+            v-for="(place, index) in getPlaceSearchResult"
             :key="place.id"
           >
             <!-- <v-list-item-icon>
@@ -47,8 +47,9 @@
         </v-list-item-group>
       </v-list>
 
+      <pagination v-if="getPagination"></pagination>
+
       <v-bottom-navigation
-      
       hide-on-scroll
       absolute
       horizontal
@@ -68,18 +69,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
+import pagination from "./Pagination"
+
   export default {
+    components: {
+      pagination
+    },
     data () {
       return {
         places: [],
         mode: false,
         inputPlace: '',
-        targetMarker: null
+        targetMarker: null,
       }
     },
     computed: {
-        ...mapGetters(['dev', 'map', 'getInfoWindow', 'getMarkers'])
+        ...mapGetters(['dev', 'map', 'getInfoWindow', 'getMarkers', 'getPagination', 'getPlaceSearchResult'])
     },
     methods: {
       changeDebug() {
@@ -88,25 +94,22 @@ import { mapGetters } from "vuex";
       },
       async searchPlace() {
         try {
-          this.dev && console.log(this.places);
-          this.places = await this.$store.dispatch('searchPlace', this.inputPlace);
-          this.$store.commit('setPlacePositionInMap', this.places);
+          this.$store.dispatch('searchPlace', this.inputPlace); // 장소 검색 
         } catch (err) {
-          this.dev && console.log(err);
-          alert("Error 발생! Debug Mode: On 후에 콘솔창 확인하세요.")
+          alert(err)
         }
       },
       selectPlace() {
         console.log("select");
       },
-      showInfoWindow(place, index) {
+      showInfoWindow(place, index) { // 검색 결과 리스트에서 element에 mouseover시 실행되는 이벤트
         this.targetMarker = this.getMarkers.find((mark) => {
           return mark.getTitle() === place.id;
         })
 
         kakao.maps.event.trigger(this.targetMarker, 'mouseover');
       },
-      hideInfoWIndow() {
+      hideInfoWIndow() { // 검색 결과 리스트에서 element에 mouseoout시 실행되는 이벤트
         kakao.maps.event.trigger(this.targetMarker, 'mouseout');
       }
     }

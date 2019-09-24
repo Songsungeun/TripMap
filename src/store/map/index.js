@@ -2,8 +2,10 @@ import loadScriptOnce from 'load-script-once'
 const state = {
   map: null,
   place: null,
+  placeSearchResult: null,
   infoWindow: null,
-  markers: []
+  markers: [],
+  pagination: null
 }
 
 const getters = {
@@ -18,6 +20,12 @@ const getters = {
   },
   getMarkers: state => {
     return state.markers;
+  },
+  getPagination: state => {
+    return state.pagination;
+  },
+  getPlaceSearchResult: state => {
+    return state.placeSearchResult;
   }
 }
 
@@ -28,13 +36,16 @@ const actions = {
   searchPlace( { state, commit }, keyword) {
     if (!kakao) return;
     this.state.dev && console.log(`search keyword is ${keyword}`);
-    commit('removeMarkers');
+    
     commit('initPlace');
     
     return new Promise( (resolve, reject) => {
-      state.place.keywordSearch(keyword, (result, status) => {
+      state.place.keywordSearch(keyword, (result, status, pagination) => {
+        commit('setPlaceSearchData', result); // 검색 결과값 저장
+        commit('setPlacePositionInMap'); // 맵에 표시
+        commit('setPagination', pagination); // mutations에서 별도로 pagination작업해주기위해 state에 pagination object 저장
         switch ( status ) {
-          case kakao.maps.services.Status.OK: resolve(result); break;
+          case kakao.maps.services.Status.OK: resolve(); break;
           case kakao.maps.services.Status.ZERO_RESULT: reject("검색 결과가 없습니다."); break;
           case kakao.maps.services.Status.ERROR: reject("오류가 발생했습니다."); break;
         }
@@ -54,9 +65,10 @@ const mutations = {
     state.place = new kakao.maps.services.Places();
     state.infoWindow = new kakao.maps.InfoWindow({zIndex:1});
   },
-  setPlacePositionInMap( state, placeList ) {
+  setPlacePositionInMap( state ) {
+    this.commit('removeMarkers');
     let bounds = new kakao.maps.LatLngBounds();
-    placeList.forEach(place => {
+    state.placeSearchResult.forEach(place => {
       this.commit('setDisplayMarker', place)
       bounds.extend(new kakao.maps.LatLng(place.y, place.x));
     });
@@ -119,6 +131,13 @@ const mutations = {
       marker.setMap(null)
     })
     state.markers = [];
+    state.pagination = null;
+  },
+  setPlaceSearchData( state, searchResult ) {
+    state.placeSearchResult = searchResult;
+  },
+  setPagination( state, pageObject ) {
+    state.pagination = pageObject;
   }
 }
 

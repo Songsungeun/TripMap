@@ -69,8 +69,8 @@ export default {
           center: new kakao.maps.LatLng(lat, lng),
           level: 3
         };
-        this.$store.commit('setMapObj', {el: this.$el, option: options});
-        this.$store.commit('setPlaceObj');
+        this.$store.commit('setMapObj', {el: this.$el, option: options}); //초기 init시 map 객체 생성 및 state 저장
+        this.$store.commit('setPlaceObj'); //초기 init시 place & infoWindow 객체 생성 및 state저장
       })
     },
     getLocation() {
