@@ -18,6 +18,7 @@
                 style="margin-top:10px;"
                 v-model="inputPlace"
                 append-icon="mdi-magnify"
+                :autofocus="true"
                 @keyup.enter="searchPlace"
               ></v-text-field>
           </v-list-item-content>
@@ -38,7 +39,7 @@
 
             <v-list-item-content>
               <v-list-item-title style="font-size: medium;">
-                <a @click="selectPlace" style="color: black !important;">
+                <a @click="selectPlace" @mouseover="showInfoWindow(place, index)" @mouseout="hideInfoWIndow" style="color: black !important;">
                 <span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</a>
               </v-list-item-title>
             </v-list-item-content>
@@ -73,11 +74,12 @@ import { mapGetters } from "vuex";
       return {
         places: [],
         mode: false,
-        inputPlace: ''
+        inputPlace: '',
+        targetMarker: null
       }
     },
     computed: {
-        ...mapGetters(['Mode', 'dev'])
+        ...mapGetters(['dev', 'map', 'getInfoWindow', 'getMarkers'])
     },
     methods: {
       changeDebug() {
@@ -96,6 +98,16 @@ import { mapGetters } from "vuex";
       },
       selectPlace() {
         console.log("select");
+      },
+      showInfoWindow(place, index) {
+        this.targetMarker = this.getMarkers.find((mark) => {
+          return mark.getTitle() === place.id;
+        })
+
+        kakao.maps.event.trigger(this.targetMarker, 'mouseover');
+      },
+      hideInfoWIndow() {
+        kakao.maps.event.trigger(this.targetMarker, 'mouseout');
       }
     }
   }

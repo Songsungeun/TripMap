@@ -72,8 +72,10 @@ const mutations = {
     
     let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
     let marker = new kakao.maps.Marker(paramObj);
-    
+    marker.setTitle(place.id); // NavBar에서 비교를 위해 title에 place id 값 넣어줌
     state.markers.push(marker); // 마커 배열에 별도 저장
+
+    // event Listener 등록
     this.commit('addEventListener', 
       { target: marker, 
         eventName: 'mouseover', 
