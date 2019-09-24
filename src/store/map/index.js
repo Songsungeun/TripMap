@@ -2,7 +2,8 @@ import loadScriptOnce from 'load-script-once'
 const state = {
   map: null,
   place: null,
-  infoWindow: null
+  infoWindow: null,
+  markers: []
 }
 
 const getters = {
@@ -11,6 +12,12 @@ const getters = {
   },
   place: state => {
     return state.place;
+  },
+  getInfoWindow: state => {
+    return state.infoWindow;
+  },
+  getMarkers: state => {
+    return state.markers;
   }
 }
 
@@ -21,6 +28,7 @@ const actions = {
   searchPlace( { state, commit }, keyword) {
     if (!kakao) return;
     this.state.dev && console.log(`search keyword is ${keyword}`);
+    commit('removeMarkers');
     commit('initPlace');
     
     return new Promise( (resolve, reject) => {
@@ -56,27 +64,60 @@ const mutations = {
   },
   setDisplayMarker( state, place ) {
     // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',  
-    let imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_normal.png',
-    imageSize = new kakao.maps.Size(64, 69), 
-    imageOption = {offset: new kakao.maps.Point(360, 198, 410, 162)}; 
-    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
-
-    let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x), image: markerImage}
+    // let imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_normal.png',
+    // imageSize = new kakao.maps.Size(64, 69), 
+    // imageOption = {offset: new kakao.maps.Point(360, 198, 410, 162)}; 
+    // let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+    // let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x), image: markerImage}
+    
+    let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
     let marker = new kakao.maps.Marker(paramObj);
     
-    kakao.maps.event.addListener(marker, 'click', () => {
-      state.infoWindow.setContent(
-        `<div style="padding:5px;font-size:12px;">
-          <div>장소:  ${place.place_name}</div>
-          <div>홈페이지:<a href="${place.place_url || '#'}">  ${place.place_url || '없음'}</a></div>
-          <div>Tel:  ${place.phone || '등록안됨'}</div>
-          <div>주소:  ${place.road_address_name || '등록안됨'}</div>
-        </div>`
-      );
-      state.infoWindow.open(state.map, marker)
-    })
+    state.markers.push(marker); // 마커 배열에 별도 저장
+    this.commit('addEventListener', 
+      { target: marker, 
+        eventName: 'mouseover', 
+        handler: () => {
+          this.commit('setInfoWindowContents', place);
+          state.infoWindow.open(state.map, marker);
+        }
+      })
+      
+    this.commit('addEventListener', { target: marker, eventName: 'mouseout', handler: () => {state.infoWindow.close();} });
   },
-  
+
+  /* infoWindow용 make&set Content 함수
+    param: place Object,  return: String for HTML
+  */
+  setInfoWindowContents( state, place ) {
+    let html = `<div style="padding:5px;font-size:12px;">
+                  <div>장소:  ${place.place_name}</div>
+                  <div>홈페이지:<a href="${place.place_url || '#'}">  ${place.place_url || '없음'}</a></div>
+                  <div>Tel:  ${place.phone || '등록안됨'}</div>
+                  <div>주소:  ${place.road_address_name || '등록안됨'}</div>
+                </div>`;
+    state.infoWindow.setContent(html);
+  },
+
+  /* kakao EventListener 등록
+    param: obj {target, eventName, handler}
+  */
+  addEventListener( state, obj) {
+    if(!obj.target && !obj.eventName && !obj.handler) {
+      state.dev && console.error('addEventListener func is required (target, eventName, handler).');
+      state.dev && console.log('your option is');
+      state.dev && console.log(obj); 
+      alert('event 등록 옵션값을 확인해주세요.'); 
+      return;
+    }
+    kakao.maps.event.addListener(obj.target, obj.eventName, obj.handler);
+  },
+  removeMarkers( state ) {
+    state.markers.forEach((marker) => {
+      marker.setMap(null)
+    })
+    state.markers = [];
+  }
 }
 
 export default {
