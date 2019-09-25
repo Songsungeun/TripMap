@@ -143,7 +143,13 @@ const mutations = {
     state.savePlaceList = [];
   },
   removeOneSavedPlace( state, place ) {
-    
+    let placeIndex;
+    state.savePlaceList.forEach((savePlace, index) => {
+      if (savePlace.id === place.id) {
+        placeIndex = index;
+      }
+    })
+    state.savePlaceList.splice(placeIndex, 1);
   }
 }
 

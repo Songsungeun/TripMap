@@ -88,7 +88,7 @@
                     <a @click="selectPlace(place)" @mouseover="showInfoWindow(place, index)" @mouseout="hideInfoWIndow" style="color: black !important;" class="search_item">
                       <span class="search_index">{{index + 1}}.</span>{{ place.place_name }}
                     </a>
-                    <v-icon color="purple" style="float:right;" @click="deletePlace(place)">mdi-minus</v-icon>
+                    <v-icon color="grey" style="float:right;" @click="deletePlace(place)">mdi-delete</v-icon>
                   </v-flex>
                   
                 </v-list-item-title>
@@ -96,6 +96,11 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
+
+        <v-btn text color="deep-purple accent-4" @click="deleteAllPlace">
+          <v-icon color="grey" style="float:right;">mdi-delete</v-icon>
+          <span>전체 삭제</span>
+        </v-btn>
       </v-tab-item>
     </v-tabs-items>
     
@@ -160,6 +165,9 @@ import pagination from "./Pagination"
       },
       deletePlace(place) {
         this.$store.commit('removeOneSavedPlace', place);
+      },
+      deleteAllPlace() {
+        this.$store.commit('removeAllSavedPlace');
       },
       showInfoWindow(place, index) { // 검색 결과 리스트에서 element에 mouseover시 실행되는 이벤트
         this.targetMarker = this.getMarkers.find((mark) => {
