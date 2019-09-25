@@ -39,8 +39,14 @@
 
             <v-list-item-content>
               <v-list-item-title style="font-size: medium;">
-                <a @click="selectPlace" @mouseover="showInfoWindow(place, index)" @mouseout="hideInfoWIndow" style="color: black !important;">
-                <span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</a>
+                <v-flex>
+                  <a @click="selectPlace(place)" @mouseover="showInfoWindow(place, index)" @mouseout="hideInfoWIndow" style="color: black !important;" class="search_item">
+                  <span class="search_index">{{index + 1}}.</span>{{ place.place_name }}</a>
+
+                   <v-icon color="purple" style="float:right;">mdi-plus</v-icon>
+                </v-flex>
+                
+                </v-btn>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -99,8 +105,8 @@ import pagination from "./Pagination"
           alert(err)
         }
       },
-      selectPlace() {
-        console.log("select");
+      selectPlace(place) {
+        console.log(place);
       },
       showInfoWindow(place, index) { // 검색 결과 리스트에서 element에 mouseover시 실행되는 이벤트
         this.targetMarker = this.getMarkers.find((mark) => {

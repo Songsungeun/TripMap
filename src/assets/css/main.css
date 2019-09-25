@@ -56,3 +56,11 @@
 .search_result_wrap {
     margin-top: 15px;
 }
+
+.search_result_wrap .search_item {
+    max-width: 240px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
