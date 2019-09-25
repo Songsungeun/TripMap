@@ -35,12 +35,12 @@
       style="height: 60px;"
     >
     
-      <v-tab href="#search_place">
+      <v-tab href="#search_place" @click="changeTab('search')">
         검색 장소
         <v-icon>mdi-magnify</v-icon>
       </v-tab>
 
-      <v-tab href="#saved_place">
+      <v-tab href="#saved_place" @click="changeTab('save')">
         저장 장소
         <v-icon>mdi-content-save</v-icon>
       </v-tab>
@@ -178,6 +178,10 @@ import pagination from "./Pagination"
       },
       hideInfoWIndow() { // 검색 결과 리스트에서 element에 mouseoout시 실행되는 이벤트
         kakao.maps.event.trigger(this.targetMarker, 'mouseout');
+      },
+      changeTab(tabType) {
+        console.log("changeTab");
+        this.$store.commit('setPlacePositionInMap', tabType);
       }
     }
   }

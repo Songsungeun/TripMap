@@ -46,7 +46,7 @@ const actions = {
     return new Promise( (resolve, reject) => {
       state.place.keywordSearch(keyword, (result, status, pagination) => {
         commit('setPlaceSearchData', result); // 검색 결과값 저장
-        commit('setPlacePositionInMap'); // 맵에 표시
+        commit('setPlacePositionInMap', 'search'); // 맵에 표시
         commit('setPagination', pagination); // mutations에서 별도로 pagination작업해주기위해 state에 pagination object 저장
         switch ( status ) {
           case kakao.maps.services.Status.OK: resolve(); break;
@@ -69,14 +69,23 @@ const mutations = {
     state.place = new kakao.maps.services.Places();
     state.infoWindow = new kakao.maps.InfoWindow({zIndex:1});
   },
-  setPlacePositionInMap( state ) {
+  setPlacePositionInMap( state, type ) {
     this.commit('removeMarkers');
     let bounds = new kakao.maps.LatLngBounds();
-    state.placeSearchResult.forEach(place => {
-      this.commit('setDisplayMarker', place)
-      bounds.extend(new kakao.maps.LatLng(place.y, place.x));
-    });
+    
+    if (type && type === 'search') {
+      state.placeSearchResult.forEach((place) => {
+        this.commit('setDisplayMarker', place)
+        bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+      });
+    } else { // 저장한 placeList인 경우
+      state.savePlaceList.forEach((place) => {
+        this.commit('setDisplayMarker', place)
+        bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+      })
+    }
     state.map.setBounds(bounds);
+    
   },
   setDisplayMarker( state, place ) {
     let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
@@ -150,7 +159,7 @@ const mutations = {
       }
     })
     state.savePlaceList.splice(placeIndex, 1);
-  }
+  },
 }
 
 export default {
