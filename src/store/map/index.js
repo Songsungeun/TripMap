@@ -5,7 +5,8 @@ const state = {
   placeSearchResult: null,
   infoWindow: null,
   markers: [],
-  pagination: null
+  pagination: null,
+  savePlaceList: [] // 유저가 별도 저장하는 장소들 모음
 }
 
 const getters = {
@@ -26,6 +27,9 @@ const getters = {
   },
   getPlaceSearchResult: state => {
     return state.placeSearchResult;
+  },
+  getSavedPlaceList: state => {
+    return state.savePlaceList;
   }
 }
 
@@ -75,13 +79,6 @@ const mutations = {
     state.map.setBounds(bounds);
   },
   setDisplayMarker( state, place ) {
-    // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',  
-    // let imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_normal.png',
-    // imageSize = new kakao.maps.Size(64, 69), 
-    // imageOption = {offset: new kakao.maps.Point(360, 198, 410, 162)}; 
-    // let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
-    // let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x), image: markerImage}
-    
     let paramObj = {map: state.map, position: new kakao.maps.LatLng(place.y, place.x)}
     let marker = new kakao.maps.Marker(paramObj);
     marker.setTitle(place.id); // NavBar에서 비교를 위해 title에 place id 값 넣어줌
@@ -138,6 +135,15 @@ const mutations = {
   },
   setPagination( state, pageObject ) {
     state.pagination = pageObject;
+  },
+  setPlaceInSavedList( state, place ) {
+    state.savePlaceList.push(place);
+  },
+  removeAllSavedPlace( state ) {
+    state.savePlaceList = [];
+  },
+  removeOneSavedPlace( state, place ) {
+    
   }
 }
 
