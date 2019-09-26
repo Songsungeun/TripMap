@@ -139,6 +139,7 @@ import pagination from "./Pagination"
         mode: false,
         inputPlace: '',
         targetMarker: null,
+        savePlaceLimit: 15
       }
     },
     computed: {
@@ -157,11 +158,24 @@ import pagination from "./Pagination"
         }
       },
       selectPlace(place) {
-        console.log("select");
         console.log(place);
       },
       savePlace(place) {
-        this.$store.commit('setPlaceInSavedList', place);
+        let hasPlace = this.getSavedPlaceList.some((savedPlace) => {
+          return savedPlace.id === place.id;
+        })
+        
+        if (hasPlace) {
+          alert("이미 등록되어있어요."); 
+          return; 
+        };
+
+        if (this.getSavedPlaceList.length < this.savePlaceLimit) {
+          this.$store.commit('setPlaceInSavedList', place);
+        } else {
+          alert("장소 저장은 15개까지 가능해요.");
+        }
+
       },
       deletePlace(place) {
         this.$store.commit('removeOneSavedPlace', place);
@@ -180,7 +194,6 @@ import pagination from "./Pagination"
         kakao.maps.event.trigger(this.targetMarker, 'mouseout');
       },
       changeTab(tabType) {
-        console.log("changeTab");
         this.$store.commit('setPlacePositionInMap', tabType);
       }
     }
