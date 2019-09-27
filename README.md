@@ -1,5 +1,5 @@
 # Demo
-[데모보기](https://songsungeun.github.io/demo).
+[데모보기](https://songsungeun.github.io/demo). - 크롬 및 웨일 브라우저 전용
 
 # TripMap
 1. 다음 지도를 이용한 여행 다중 마커
