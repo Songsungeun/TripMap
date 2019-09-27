@@ -101,6 +101,10 @@
           <v-icon color="grey" style="float:right;">mdi-delete</v-icon>
           <span>전체 삭제</span>
         </v-btn>
+        <v-btn text color="deep-purple accent-4" @click="navigation">
+          <v-icon color="grey" style="float:right;">mdi-navigation</v-icon>
+          <span>경로 찾기</span>
+        </v-btn>
       </v-tab-item>
     </v-tabs-items>
     
@@ -195,6 +199,9 @@ import pagination from "./Pagination"
       },
       changeTab(tabType) {
         this.$store.commit('setPlacePositionInMap', tabType);
+      },
+      navigation() {
+        alert("곧 업데이트 되요.");
       }
     }
   }
