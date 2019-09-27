@@ -159,6 +159,8 @@ const mutations = {
       }
     })
     state.savePlaceList.splice(placeIndex, 1);
+    this.commit('removeMarkers');
+    this.commit('setPlacePositionInMap', 'saved'); //마커 지우고 다시 생성
   },
 }
 
