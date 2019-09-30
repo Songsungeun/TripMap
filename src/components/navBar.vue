@@ -155,14 +155,19 @@ import pagination from "./Pagination"
         this.$store.commit('changeDevMode', this.mode);
       },
       async searchPlace() {
+        if(!this.inputPlace) {
+          alert("검색어를 입력하셔야 해요.");
+          return;
+        }
+        
         try {
           this.$store.dispatch('searchPlace', this.inputPlace); // 장소 검색 
         } catch (err) {
-          alert(err)
+          this.dev && console.log(err)
         }
       },
       selectPlace(place) {
-        console.log(place);
+        this.dev&&console.log(place);
       },
       savePlace(place) {
         let hasPlace = this.getSavedPlaceList.some((savedPlace) => {
@@ -198,10 +203,11 @@ import pagination from "./Pagination"
         kakao.maps.event.trigger(this.targetMarker, 'mouseout');
       },
       changeTab(tabType) {
-        this.$store.commit('setPlacePositionInMap', tabType);
+        // 저장장소 탭인 경우에는 저장된 장소가 있을 경우에만 'setPlacePositionInMap' 호출
+        return (tabType == 'save' && this.getSavedPlaceList.length < 1) ? alert("저장된 장소가 없어요.") : this.$store.commit('setPlacePositionInMap', tabType);
       },
       navigation() {
-        alert("곧 업데이트 되요.");
+        alert("곧 업데이트 (하고 싶어요).");
       }
     }
   }
