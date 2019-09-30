@@ -45,13 +45,14 @@ const actions = {
     
     return new Promise( (resolve, reject) => {
       state.place.keywordSearch(keyword, (result, status, pagination) => {
-        commit('setPlaceSearchData', result); // 검색 결과값 저장
-        commit('setPlacePositionInMap', 'search'); // 맵에 표시
-        commit('setPagination', pagination); // mutations에서 별도로 pagination작업해주기위해 state에 pagination object 저장
         switch ( status ) {
-          case kakao.maps.services.Status.OK: resolve(); break;
-          case kakao.maps.services.Status.ZERO_RESULT: reject("검색 결과가 없습니다."); break;
-          case kakao.maps.services.Status.ERROR: reject("오류가 발생했습니다."); break;
+          case kakao.maps.services.Status.OK: 
+            commit('setPlaceSearchData', result); // 검색 결과값 저장
+            commit('setPlacePositionInMap', 'search'); // 맵에 표시
+            commit('setPagination', pagination); // mutations에서 별도로 pagination작업해주기위해 state에 pagination object 저장
+            resolve(); break;
+          case kakao.maps.services.Status.ZERO_RESULT: alert("검색 결과가 없어요."); break;
+          case kakao.maps.services.Status.ERROR: alert("오류가 발생했어요."); break;
         }
       });
     }); 
